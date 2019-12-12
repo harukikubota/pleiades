@@ -1,0 +1,5 @@
+Usage:
+  rails generate pleiades:install
+
+Description:
+  Create pleiades files for install generator.

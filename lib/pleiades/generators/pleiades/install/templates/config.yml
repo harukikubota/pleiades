@@ -1,0 +1,5 @@
+command:
+  commands_path: 'app/commands'
+debug:
+  # call BaseCommand#show_event
+  disp_console: true

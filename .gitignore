@@ -1,11 +1,19 @@
-/.bundle/
-/.yardoc
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
-/tmp/
+*
+*/
 
-# rspec failure tracking
-.rspec_status
+!.gitignore
+!.rspec
+!.ruby-version
+!.travis.yml
+!Gemfile
+!LICENSE.txt
+!pleiades.gemspec
+Rakefile
+README.md
+
+!/bin/
+!/bin/**/*
+!/lib/
+!/lib/**/*
+!/spec/
+!/spec/**/*

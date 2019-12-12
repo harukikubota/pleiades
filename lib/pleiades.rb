@@ -1,6 +1,7 @@
-require "pleiades/version"
+require 'pleiades/version'
+require 'pleiades/railtie'
+require 'pleiades/core'
+require 'pleiades/core_ext'
 
 module Pleiades
-  class Error < StandardError; end
-  # Your code goes here...
 end

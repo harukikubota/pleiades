@@ -1,0 +1,18 @@
+module CommandCommon
+  extend ActiveSupport::Concern
+
+  included do
+    def client
+      @client ||= Line::Bot::Client.new { |config|
+        config.channel_secret = ENV['LINE_CHANNEL_SECRET']
+        config.channel_token = ENV['LINE_CHANNEL_TOKEN']
+      }
+    end<% if options['user_related_files'] %>
+
+    def current_user
+      @user ||= User.find_by_line_id(@event.source.user_id)
+    end
+    alias_method :user, :current_user
+<% end %>
+  end
+end

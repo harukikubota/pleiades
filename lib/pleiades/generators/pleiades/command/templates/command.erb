@@ -1,0 +1,6 @@
+<% dirs.each.with_index(0) do |dir, tab| %><%= '  ' * tab %>module <%= dir.camelize %>
+<% end %><%= '  ' * dirs.size %>class <%= name.camelize%> < BaseCommand
+<%= '  ' * (dirs.size + 1) %>def call
+<%= '  ' * (dirs.size + 2) %># TODO: write something
+<% [*0..(dirs.size + 1)].reverse_each do |tab| %><%= '  ' * tab %>end
+<% end %>

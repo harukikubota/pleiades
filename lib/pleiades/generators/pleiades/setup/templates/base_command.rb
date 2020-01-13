@@ -10,14 +10,16 @@ class BaseCommand < Pleiades::Command::BaseCommand
   end
 
   def show_event
-    p <<~MES
-      \n
-      \n
+    mes = <<~MES
+
+
       |------------------------------------|
       | There is no corresponding command. |
       |------------------------------------|
-      \n
+
       event:#{@event.type}
     MES
+
+    mes.split("\n").each { |m| p m }
   end
 end

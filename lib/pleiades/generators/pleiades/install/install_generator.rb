@@ -8,6 +8,7 @@ class Pleiades::InstallGenerator < Rails::Generators::Base
         #{cst::CONFIG}
         #{cst::INITIALIZER}
         #{cst::ROUTER}
+        #{cst::ROUTING_PROXY}
       ]
 
     file_paths.each { |f| copy_file File.basename(f), f }

@@ -19,7 +19,7 @@ class Pleiades::SetupGenerator < Rails::Generators::Base
   def gen_base_command
     return if base_command_exist?
 
-    copy_file File.basename(command_file_path), command_file_path
+    copy_file File.basename(base_command_path), base_command_path
   end
 
   def gen_command_concern
@@ -51,12 +51,12 @@ class Pleiades::SetupGenerator < Rails::Generators::Base
   # UserModelのマイグレーションファイル生成
   def gen_user_table
     generate 'model', "user #{migration_arguments}"
-
+    
     user_schemas.each_pair do |key, val|
       next unless val[:options]
 
       inject_into_file(
-        migration_file_path,
+        Dir.glob(migration_file_path).last,
         ", #{val[:options]}",
         after: key
       )

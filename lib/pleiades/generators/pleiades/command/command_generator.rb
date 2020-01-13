@@ -4,12 +4,14 @@ require 'pleiades/core/config'
 class Pleiades::CommandGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
-  argument :names, type: :array, desc: 'Specify command class name.'
+  argument :name, type: :string, desc: 'Specify command class name.'
+  argument :names, type: :array, desc: 'Specify command class name.', default: []
 
   dir_options =
     {
       aliases: '-d',
-      desc: 'Specify the directory to generate commands.'
+      desc: 'Specify the directory to generate commands.',
+      default: ''
     }
   class_option :dir, dir_options
 

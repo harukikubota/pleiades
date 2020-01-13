@@ -1,6 +1,5 @@
 class BaseCommand < Pleiades::Command::BaseCommand
   def call
-    success!
     show_event if disp?
   end
 

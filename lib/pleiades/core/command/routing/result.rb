@@ -27,7 +27,9 @@ module Pleiades
         end
 
         def command_path
-          normalize_path(@event_args[:scope], @event_args[:action])
+          path = normalize_path(@event_args[:scope], @event_args[:action])
+
+          path.blank? ? Pleiades::Config.command.default : path
         end
 
         def call_method

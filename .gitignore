@@ -8,8 +8,8 @@
 !Gemfile
 !LICENSE.txt
 !pleiades.gemspec
-Rakefile
-README.md
+!Rakefile
+!README.md
 
 !/bin/
 !/bin/**/*

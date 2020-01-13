@@ -1,35 +1,50 @@
 require 'pleiades/core/constants'
 require 'pleiades/core/config'
-require 'pleiades/core/command/nest_blocks'
-require 'pleiades/core/command/event_proccessor'
+require 'pleiades/core/command/routing/event_proccessor'
+require 'pleiades/core/command/routing/nest_blocks'
+require 'pleiades/core/command/routing/path_builder'
+require 'pleiades/core/command/routing/reflection'
+require 'pleiades/core/command/routing/result'
+require 'pleiades/core/command/routing/validator'
 
 module Pleiades
   module Command
     class Router
-      prepend Pleiades::Command::NestBlocks
-      prepend Pleiades::Command::EventProccessor
+      prepend Pleiades::Command::Routing::EventProccessor
+      prepend Pleiades::Command::Routing::NestBlocks
+      prepend Pleiades::Command::Routing::PathBuilder
+      prepend Pleiades::Command::Routing::Reflection
+      prepend Pleiades::Command::Routing::Validator
 
       class << self
-        attr_accessor :path
         attr_reader :event
+        attr_writer :path_info
 
-        def find_route(event)
+        def find_route(event, router_path)
           @event = event
-          @path = nil
+          @path_info = nil
 
-          load Pleiades::Constants::File::ROUTER
-
-          Router.path_found? ? Router.path : 'base_command'
+          load router_path
         end
 
         def route(&block)
           new.instance_eval(&block) if block_given?
         end
 
+        def path_info
+          @path_info || default_path_info
+        end
+
+        def default_path_info
+          new.instance_eval { Pleiades::Command::Routing::Result.create(@options) }
+        end
+
         def path_found?
-          @path ? true : false
+          !!@path_info
         end
       end
+
+      attr_reader :options
 
       def initialize(options = nil)
         @event = Router.event
@@ -38,22 +53,8 @@ module Pleiades
 
       private
 
-      def normalize_path(scope = nil, action = nil)
-        dirs = []
-
-        dirs << @options[:scope] if @options[:scope].any?
-        dirs << scope if scope
-        dirs << (action || @options[:action])
-
-        dirs.join('/')
-      end
-
-      def talk_type(*callable_types, &block)
-        instance_eval(&block) if callable_type?(callable_types)
-      end
-
-      def callable_type?(types)
-        types.map(&:to_s).include?(@event.source.type)
+      def nest(new_option, &block)
+        self.class.new(new_option).instance_eval(&block)
       end
     end
   end

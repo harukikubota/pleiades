@@ -1,6 +1,4 @@
 class BaseCommand < Pleiades::Command::BaseCommand
-  include CommandCommon
-
   def call
     success!
     show_event if disp?
@@ -9,11 +7,11 @@ class BaseCommand < Pleiades::Command::BaseCommand
   private
 
   def disp?
-    Rails.env.development? && Pleiades::Config.disp_console
+    Rails.env.development? && Pleiades::Config.debug.disp_console
   end
 
   def show_event
-    mes = <<~MES
+    p <<~MES
       \n
       \n
       |------------------------------------|
@@ -22,7 +20,5 @@ class BaseCommand < Pleiades::Command::BaseCommand
       \n
       event:#{@event.type}
     MES
-
-    p mes
   end
 end

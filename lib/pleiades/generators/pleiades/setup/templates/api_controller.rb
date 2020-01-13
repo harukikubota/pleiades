@@ -1,25 +1,14 @@
 require 'pleiades'
 
 class Line::ApiController < ApplicationController
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
+  include Pleiades::Client
 
   def callback
-    body = request.body.read
-
-    signature = request.env['HTTP_X_LINE_SIGNATURE']
-    client.validate_signature(body, signature) || head(:bad_request)
-
-    events = client.parse_events_from(body)
+    validate_signature || head(:bad_request)
 
     events.each do |event|
-      command = Pleiades::Command.get(event)
-      command.call
-      head :ok if command.success?
+      Pleiades::Command.get(event).call
     end
+    head :ok
   end
 end

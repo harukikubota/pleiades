@@ -4,7 +4,7 @@ module Line
       class Postback
         attr_reader :action, :params
 
-        def initialize src
+        def initialize(src)
           super
           set_instance_variables
         end
@@ -16,9 +16,11 @@ module Line
         # action 'path/to/command'
         # params '{product_id: 1, order_num: 3}'
         def set_instance_variables
-          data = postback.data.split('&')
-                              .map { |s| s.split('=') }
-                              .each_with_object({}) { |(key, val), hash| hash[key.to_sym] = val }
+          data =
+            postback.data
+                    .split('&')
+                    .map { |s| s.split('=') }
+                    .each_with_object({}) { |(key, val), hash| hash[key.to_sym] = val }
 
           @action = data.delete :action
           @params = data

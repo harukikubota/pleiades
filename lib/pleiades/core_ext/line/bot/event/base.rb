@@ -1,12 +1,16 @@
 require 'pleiades/core/util'
+require 'freeezer'
 
 module Line
   module Bot
     module Event
       class Base
-        def initialize src
+        using Freeezer
+
+        def initialize(src)
           @src = Pleiades::Util.define_reader src
 
+          # moduleにする
           # /^[a-z]+_event\?$/
           #  => トークタイプの判定メソッドに反応する。
           #
@@ -17,16 +21,21 @@ module Line
           #
           @src.define_singleton_method(:method_missing) do |method, *_|
             return super() unless /^[a-z]+_event\?$/ =~ method
+
             source.type == method.to_s.split('_').first
           end
+          @src.deep_freeze
         end
 
-        def method_missing method, *_
-          begin
-            @src.__send__ method
-          rescue ArgumentError => _
-            raise NoMethodError, "#{self.class} has no `#{method}` method."
-          end
+        private
+
+        def method_missing(method, *_)
+          @src.respond_to?(method) || super
+          @src.__send__ method
+        end
+
+        def respond_to_missing?(method, *_)
+          @src.respond_to?(method) || super
         end
       end
     end

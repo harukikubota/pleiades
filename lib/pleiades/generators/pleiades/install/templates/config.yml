@@ -1,5 +1,15 @@
 command:
-  commands_path: 'app/commands'
+  commands_path: app/commands
+  default: base_command
+router:
+  default:
+    method: call
+    concern: []
+    executor: Pleiades::Command::Executor
+client:
+  key_acquisition_process:
+    channel_secret: ENV["LINE_CHANNEL_SECRET"]
+    channel_token : ENV["LINE_CHANNEL_TOKEN"]
 debug:
   # call BaseCommand#show_event
   disp_console: true

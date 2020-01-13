@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'bundler', '~> 2.0'
+  spec.add_dependency 'freeezer'
   spec.add_dependency 'line-bot-api', '~> 1.12.0'
   spec.add_development_dependency 'rails', '~> 5.2.3'
   spec.add_development_dependency 'rake', '~> 10.0'

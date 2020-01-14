@@ -164,9 +164,9 @@ module Pleiades
                       break if routers.include?(false)
 
                       arr << nest_routers(routers) { method(method_name).call(arg) }.flatten
-                    end.last
+                    end
 
-          nested_options ? nested_options.map(&:options) : false
+          nested_options ? nested_options.last.map(&:options) : false
         end
 
         def nest_routers(routers, &proc)

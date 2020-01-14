@@ -7,12 +7,13 @@ RailsでLINEBotを開発するためのgem。
 Add this line to your application's Gemfile:
 
 ```ruby
+# Gemfile
 gem 'pleiades'
 ```
-    $ bundle install
+    $ bundle
 
 ## Usage
-Comming soon.....
+Comming soon...
 
 ## Contributing
 

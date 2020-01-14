@@ -11,7 +11,7 @@ module Pleiades
         # end
         #
         def only_events(*events, &block)
-          return false unless callable_event_type?(events)
+          return false unless callable_event_type?(events.flatten)
 
           return self unless block_given?
 
@@ -27,7 +27,7 @@ module Pleiades
         # end
         #
         def talk_type(*talk_types, &block)
-          return false unless callable_talk_type?(talk_types)
+          return false unless callable_talk_type?(talk_types.flatten)
 
           return self unless block_given?
 

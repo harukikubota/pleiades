@@ -31,6 +31,7 @@ class Pleiades::CommandGenerator < Rails::Generators::NamedBase
   def generate_command
     commands_path = Pleiades::Config.command.commands_path
     @names.each do |name|
+      @command_name = name
       template 'command.erb', "#{commands_path}/#{options['dir']}/#{name}.rb"
     end
   end

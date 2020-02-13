@@ -61,7 +61,7 @@ module Pleiades
         def method_missing(method, *args, &block)
           return super unless event_types.include?(method.to_s)
 
-          exe_event_method(args.inject(&:merge).merge(type: method))
+          exe_event_method((args.inject(&:merge) || {}).merge(type: method))
         end
 
         def respond_to_missing?(method, *args, &block)
